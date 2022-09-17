@@ -11,8 +11,22 @@ lttng-relayd
 lttng create kernel-tracing-session --live 
 
 lttng enable-channel k -k
-lttng enable-event -c k -k syscall_latency
-lttng enable-event -c k -k syscall_latency_stack
+kernel_events=(
+    "sched_switch" 
+    "sched_process_*" 
+    #"lttng_statedump_*"
+    "irq_*"
+    "signal_*" 
+    "workqueue_*"
+    #"power_cpu_frequency"
+    #"kmem_"{mm_page,cache}_{alloc,free} "block_rq_"{issue,complete,requeue}
+    # "x86_exceptions_page_fault_"{user,kernel}
+)
+
+for event in "${kernel_events[@]}"; do
+    lttng enable-event -c kernel -k "$event"
+done
+
 #lttng enable-event -c k -k workqueue_*
 
 #lttng enable-channel u -u
