@@ -1,7 +1,12 @@
 #!/bin/bash
 
 #lttng-sessiond --extra-kmod-probes=latency_tracker -d
-lttng create
+
+TMP_FOLDER="/tmp/lttng/$(date -Iseconds)"
+echo "export TMP_FOLDER=$TMP_FOLDER" >> /tmp/.envrc
+source /tmp/.envrc
+
+lttng create -o "$TMP_FOLDER"
 
 lttng enable-channel k -k
 lttng enable-event -c k -k syscall_latency

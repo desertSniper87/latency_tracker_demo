@@ -23,7 +23,8 @@ export CFLAGS='-O3'
 
 # Install patched lttng-modules.
 pushd lttng-modules-2.6.0
-patch -p1 < ../latency_tracker-master/extras/0001-connect-to-latency_tracker-tracepoints.patch
+pwd
+#patch -p1 < ../latency_tracker-master/extras/0001-connect-to-latency_tracker-tracepoints.patch
 make -j4
 sudo make modules_install
 sudo depmod -a
